@@ -7,7 +7,6 @@ use rodio::Sink;
 use serde::{Deserialize, Serialize};
 use slint::{platform::Key, Color, ComponentHandle, Model, SharedString, Timer, VecModel, Weak};
 use std::{
-    env,
     fs::{File, OpenOptions},
     io::{BufReader, BufWriter},
     path::Path,

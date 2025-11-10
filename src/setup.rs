@@ -1,10 +1,7 @@
-#[cfg(unix)]
 use anyhow::Result;
-use log::{error, LevelFilter};
-use std::{
-    io::Cursor,
-    sync::mpsc::{self, Receiver},
-};
+use log::LevelFilter;
+use std::sync::mpsc::{self, Receiver};
+#[cfg(unix)]
 use systemd_journal_logger::{connected_to_journal, JournalLog};
 use tray_item::{IconSource, TrayItem};
 
@@ -40,12 +37,12 @@ pub fn logging() {
     let fallback_needed = true
     */
 
-    if fallback_needed {
-        //setup text file logging if:
-        //    * nix systems: systemd journal or syslog fails
-        //    * Windows: Event log fails
-        //    * Mac: always currentlys
-    }
+    // if fallback_needed {
+    //     //setup text file logging if:
+    //     //    * nix systems: systemd journal or syslog fails
+    //     //    * Windows: Event log fails
+    //     //    * Mac: always currentlys
+    // }
 
     //default to warn until we can read from settings or ENV
     log::set_max_level(LevelFilter::Warn);
@@ -100,10 +97,11 @@ fn create_tray() -> Result<TrayItem> {
 
 #[cfg(windows)]
 fn create_tray() -> Result<TrayItem> {
-    TrayItem::new(
+    let v = TrayItem::new(
         "Tomotroid\nClick to Restore",
         IconSource::Resource("logo-icon"),
-    )
+    )?;
+    Ok(v)
 }
 
 pub fn backend() {

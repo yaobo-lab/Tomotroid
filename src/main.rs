@@ -4,7 +4,7 @@
     //clippy::cargo,
 )]
 #![windows_subsystem = "windows"]
-
+#![allow(dead_code)]
 mod settings;
 mod setup;
 
@@ -318,6 +318,7 @@ fn main() -> Result<()> {
             settings::bool_changed(&set_handle, &config_model, set_type, val);
         });
 
+    //热键
     let ghk_handle = tomotroid.window.as_weak();
     let ghk_receiver = GlobalHotKeyEvent::receiver();
     let _thread = std::thread::spawn(move || loop {
@@ -447,6 +448,7 @@ fn main() -> Result<()> {
         let tick_sink = tick_sink.clone();
         match action {
             TimerAction::Start => {
+                println!("Start Timer-------");
                 timer_handle.set_running(true);
                 timer.start(
                     TimerMode::Repeated,
@@ -480,15 +482,18 @@ fn main() -> Result<()> {
                 );
             }
             TimerAction::Stop => {
+                println!("Stopping Timer-------");
                 timer_handle.set_running(false);
                 timer.stop();
             }
             TimerAction::Reset => {
+                println!("Reset Timer-------");
                 timer.stop();
                 timer_handle.set_running(false);
                 timer_handle.set_remaining_time(timer_handle.get_target_time());
             }
             TimerAction::Skip => {
+                println!("Skip Timer-------");
                 //timer_handle.set_remaining_time(0);
                 timer_handle.invoke_change_timer();
             }
